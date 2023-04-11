@@ -39,6 +39,21 @@ for (let i = 0; i < links.length; i++) {
     });
 }
 
+// Track button clicks
+let buttons = document.getElementsByTagName('button');
+for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', function (event) {
+        let buttonsText = event.target.innerText;
+        let buttonsUrl = event.target.href;
+        userActions.push({
+            action: 'buttonClick',
+            buttonsText: buttonsText,
+            buttonsUrl: buttonsUrl,
+            time: new Date().getTime()
+        });
+    });
+}
+
 //Track input change
 let inputElements = document.querySelectorAll('input');
 inputElements.forEach(function (inputElement) {
@@ -65,8 +80,25 @@ document.addEventListener('mousemove', function (event) {
 // Send data to server-side script every 30 seconds
 setInterval(function () {
     sendAJAX(JSON.stringify(userActions));
-}, 60000);
+}, 10000);
 
-function sendAJAX(data) {
-    var req = data;
+function sendAJAX(userAct) {
+
+    var data = {
+        stUserAct: userAct,
+    };
+    $.ajax({
+        type: "POST",
+        url: "/Methods.aspx/writeCatchEvent",
+        data: JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: sendAJAXSuccess,
+        error: function (xhr, e) {
+            alert(response.d);
+        }
+    });
+}
+function sendAJAXSuccess() {
+
 }
