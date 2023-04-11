@@ -243,6 +243,7 @@
     <Content Include="Content\vendor\slick\slick.js" />
     <Content Include="Content\vendor\slick\slick.min.js" />
     <Content Include="Content\vendor\sweetalert\sweetalert.min.js" />
+    <Content Include="JS\TestPage.js" />
     <Content Include="TestPage.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
